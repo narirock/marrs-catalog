@@ -1,0 +1,19 @@
+{
+    "name": "narirock/marrs-catalog",
+    "description": "Pacote para inclusão das funções de catalogo",
+    "authors": [
+        {
+            "name": "narirock",
+            "email": "nari9rock@hotmail.com"
+        }
+    ],
+    "require": {
+        "laravelcollective/html": "^6.2",
+        "nesbot/carbon": "^2.50"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marrs\\MarrsCatalog\\": "src/"
+        }
+    }
+}
