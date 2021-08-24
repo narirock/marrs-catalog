@@ -16,30 +16,27 @@ class CatalogController extends Controller
         $date = date('Y-m-d');
         $tag = "";
 
-        $notices = new Product;
+        $products = new Product;
 
 
 
         if ($term) {
-            $notices = $notices->where(function ($sql) use ($term) {
-                $sql->where('body', 'LIKE', '%' . $term . '%')
-                    ->orwhere('title', 'LIKE', '%' . $term . '%')
-                    ->orwhere('excerpt', 'LIKE', '%' . $term . '%');
+            $products = $products->where(function ($sql) use ($term) {
+                $sql->where('description', 'LIKE', '%' . $term . '%')
+                    ->orwhere('name', 'LIKE', '%' . $term . '%');
             });
         }
         //se categorias forem selecionadas devem ser mostrados apenas os products
         if ($request->category) {
-            $notices = $notices->where('category_id', '=', $request->category);
+            $products = $products->where('catalog_department_id', '=', $request->category);
         }
         //se tags forem clicadas devem ser mostrados apenas os products
         if ($request->tag) {
-            $notices = $notices->where('meta_keywords', 'LIKE', '%' . $request->tag . '%');
+            $products = $products->where('meta_keywords', 'LIKE', '%' . $request->tag . '%');
             $tag = $request->tag;
         }
 
-        $products = $notices->where('status', 'PUBLISHED')
-            ->where('publish', '<=', $date)
-            ->orderby('publish', 'desc')
+        $products = $products
             ->paginate(8);
 
 

@@ -58,6 +58,13 @@ class Install extends Command
                 'icon_class' => 'fab fa-product-hunt',
                 'type' => 'menu',
                 'menu_id' => $blmenu->id
+            ],
+            [
+                'name' => 'Marcas',
+                'route' => 'admin.catalog.brands.index',
+                'icon_class' => 'fas fa-copyright',
+                'type' => 'menu',
+                'menu_id' => $blmenu->id
             ]
         ]);
 

@@ -1,36 +1,36 @@
 @extends(Config::get('marrs-catalog.template.front'))
 @section('seo')
     <!-- Primary Meta Tags -->
-    <title>Inglês com Café - {!! $product->title !!}</title>
-    <meta name="title" content="Inglês com Café - {!! $product->title !!}">
+    <title>{{ env('APP_NAME') }} - {!! $product->name !!}</title>
+    <meta name="title" content="{{ env('APP_NAME') }} - {!! $product->description !!}">
     <meta name="description" content="{!! $product->excerpt !!}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ env('APP_URL') }}/">
-    <meta property="og:title" content="Inglês com Café - {!! $product->title !!}">
-    <meta property="og:description" content="{!! $product->excerpt !!}">
+    <meta property="og:title" content="{{ env('APP_NAME') }} - {!! $product->name !!}">
+    <meta property="og:description" content="{!! $product->description !!}">
     <meta property="og:image" content="{{ env('APP_URL') }}/site/images/seo.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ env('APP_URL') }}/">
-    <meta property="twitter:title" content="Inglês com Café - {!! $product->title !!}">
-    <meta property="twitter:description" content="{!! $product->excerpt !!}">
+    <meta property="twitter:title" content="{{ env('APP_NAME') }} - {!! $product->name !!}">
+    <meta property="twitter:description" content="{!! $product->description !!}">
     <meta property="twitter:image" content="{{ env('APP_URL') }}/site/images/seo.png">
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ env('APP_URL') }}/catalog/none-do-product" />
 @endsection
 @section('content')
     <section class="product-header"
-        style="background:linear-gradient(0deg,rgba(4, 37, 83, 0.753),rgba(20, 167, 212, 0.534)),url('/{{ $product->image }}');"
+        style="background:linear-gradient(0deg,rgba(4, 37, 83, 0.753),rgba(20, 167, 212, 0.534)),url('//i.picsum.photos/id/1011/5472/3648.jpg?hmac=Koo9845x2akkVzVFX3xxAc9BCkeGYA9VRVfLE4f0Zzk');"
         data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters  align-items-end justify-content-center">
                 <div class="col-md-9 ftco-animate mb-5 text-center">
-                    <h1 class="mb-3 bread text-white">{!! $product->title !!}</h1>
-                    <p class="breadcrumbs text-white">{!! $product->excerpt !!}</p>
+                    <h1 class="mb-3 bread text-white">{!! $product->name !!}</h1>
+                    <p class="breadcrumbs text-white">{!! $product->description !!}</p>
                 </div>
             </div>
         </div>
@@ -43,16 +43,13 @@
                     <div class="col-lg-8 col-md-8 col-sm-12">
                         <!-- Card Catalog -->
                         <div class="article-box">
-                            <header class="article-header" style="background-image: url('/{{ $product->image }}')">
+                            <header class="article-header"
+                                style="background-image: url('//i.picsum.photos/id/1011/5472/3648.jpg?hmac=Koo9845x2akkVzVFX3xxAc9BCkeGYA9VRVfLE4f0Zzk')">
                             </header>
                             <main class="article-body">
-                                <h1 class="article-title">{!! $product->title !!}</h1>
-                                <div class="alert bg-light article-details">
-                                    <p><i class="fas fa-chalkboard-teacher"></i> {{ @$product->author->name }} &nbsp; <i
-                                            class="fas fa-calendar"></i>
-                                        {{ Carbon\Carbon::create($product->publish)->format('d/m/Y') }}</p>
-                                </div>
-                                {!! $product->body !!}
+                                <h1 class="article-title">{!! $product->name !!}</h1>
+
+                                {!! $product->description !!}
                             </main>
                         </div>
                         <div class="paginate-box bg-light mb-30">
@@ -78,7 +75,7 @@
                                 </a>
                                 <!-- Sharingbutton Twitter -->
                                 <a class="resp-sharing-button__link"
-                                    href="https://twitter.com/intent/tweet/?text=Confira essa matéria do Inglês com Café..&amp;url={{ env('APP_URL') }}"
+                                    href="https://twitter.com/intent/tweet/?text=Confira essa matéria do {{ env('APP_NAME') }}..&amp;url={{ env('APP_URL') }}"
                                     target="_blank" rel="noopener" aria-label="">
                                     <div
                                         class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
@@ -93,7 +90,7 @@
                                 </a>
                                 <!-- Sharingbutton E-Mail -->
                                 <a class="resp-sharing-button__link"
-                                    href="mailto:?subject=Confira essa matéria do Inglês com Café..&amp;body={{ env('APP_URL') }}"
+                                    href="mailto:?subject=Confira essa matéria do {{ env('APP_NAME') }}..&amp;body={{ env('APP_URL') }}"
                                     target="_self" rel="noopener" aria-label="">
                                     <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small">
                                         <div aria-hidden="true"
@@ -107,7 +104,7 @@
                                 </a>
                                 <!-- Sharingbutton LinkedIn -->
                                 <a class="resp-sharing-button__link"
-                                    href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ env('APP_URL') }}&amp;title=Confira essa matéria do Inglês com Café..&amp;summary=Confira essa matéria do Inglês com Café..&amp;source={{ env('APP_URL') }}"
+                                    href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ env('APP_URL') }}&amp;title=Confira essa matéria do {{ env('APP_NAME') }}..&amp;summary=Confira essa matéria do {{ env('APP_NAME') }}..&amp;source={{ env('APP_URL') }}"
                                     target="_blank" rel="noopener" aria-label="">
                                     <div
                                         class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small">
@@ -122,7 +119,7 @@
                                 </a>
                                 <!-- Sharingbutton WhatsApp -->
                                 <a class="resp-sharing-button__link"
-                                    href="whatsapp://send?text=Confira essa matéria do Inglês com Café..%20{{ env('APP_URL') }}"
+                                    href="whatsapp://send?text=Confira essa matéria do {{ env('APP_NAME') }}..%20{{ env('APP_URL') }}"
                                     target="_blank" rel="noopener" aria-label="">
                                     <div
                                         class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small">
@@ -146,6 +143,6 @@
         </div>
     </section>
 
-    <x-marrs-catalog-products-last-row />
+
 
 @endsection

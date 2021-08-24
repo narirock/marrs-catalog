@@ -31,8 +31,8 @@
         <div class="container">
             <div class="row no-gutters align-items-end justify-content-center">
                 <div class="col-md-9 ftco-animate mb-5 text-center">
-                    <h1 class="mb-3 bread text-white">Bem-vindo ao nosso Catalog</h1>
-                    <p class="breadcrumbs text-white">Confira todas as notícias e informações sobre nós.</p>
+                    <h1 class="mb-3 bread text-white">Bem-vindo ao nosso Catalogo</h1>
+                    <p class="breadcrumbs text-white">Confira nossos produtos.</p>
                 </div>
             </div>
         </div>
