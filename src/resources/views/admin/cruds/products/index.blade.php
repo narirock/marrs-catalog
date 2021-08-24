@@ -29,7 +29,7 @@
                         <tr>
                             <td class="text-center">
                                 <a href="{{ route('admin.catalog.products.edit', ['product' => $product->id]) }}">
-                                    <img src="/{{ @$product->images[0]->url }}" alt="" width='85'>
+                                    <img src="/{{ @$product->images[0]->link }}" alt="" width='85'>
                                 </a>
                             </td>
                             <td>{{ $product->name }}</td>

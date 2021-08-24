@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            {!! Form::open(['url' => route('tenant.admin.products.store'), 'files' => true]) !!}
+            {!! Form::open(['url' => route('admin.catalog.products.store'), 'files' => true]) !!}
 
             @include("marrs-catalog::admin.cruds.products._form")
 

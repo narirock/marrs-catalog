@@ -40,12 +40,6 @@
 
 <div class="content-box">
     <div class="row">
-        {{-- <div class=" col-sm-12 col-md-3 col-xs-12">
-            <div class="form-group">
-                {!! Form::label('model', 'Modelo') !!}
-                {!! Form::text('model', null, ['class'=>'form-control', 'placeholder'=>"Modelo",]) !!}
-            </div>
-        </div> --}}
 
         <div class=" col-sm-12 col-md-3 col-xs-12">
             <div class="form-group">
@@ -110,17 +104,17 @@
 
 
 <div class="row">
-    {{-- <div class=" col-md-6 col-xs-12">
+    <div class=" col-md-6 col-xs-12">
         <div class="content-box">
             <h4><i class="fas fa-images"></i> Imagens do produto <sup><i class="fas fa-question-circle"
                         data-toggle="tooltip" data-placement="top"
                         title="Voce pode selecionar uma ou mais imagens para representar seu produto. Tamanhos recomendados (1080px por 1080px)"></i></sup>
             </h4>
             <hr>
-            @include('tenant.general.images.uploadimages')
+            @include('marrs-admin::general.images.uploadimages')
         </div>
 
-    </div> --}}
+    </div>
 
     <div class=" col-md-6 col-xs-12">
         <div class="content-box">

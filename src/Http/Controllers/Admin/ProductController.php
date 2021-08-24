@@ -14,10 +14,13 @@ use Marrs\MarrsCatalog\Models\ProductOptionValue;
 use Marrs\MarrsCatalog\Models\ProductPromotion;
 use Marrs\MarrsCatalog\Models\Department;
 use App\Repositories\Contracts\PaymentInterface;
+use Marrs\MarrsAdmin\Traits\UploadFile;
 use Marrs\MarrsCatalog\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
+    use UploadFile;
+
     private $product;
     private $image;
 
@@ -36,7 +39,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->product->all();
+        $products = $this->product->with('images')->get();
         return view('marrs-catalog::admin.cruds.products.index', compact('products'));
     }
 
@@ -60,7 +63,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = $this->product->create($request->all());
-
+        $this->updateImages($request->arquivo, $product);
         ## salvando promoções ##
         $promotions = json_decode($request->promotions);
         $mantainPromotion = array();
@@ -143,18 +146,6 @@ class ProductController extends Controller
             }
         }
 
-
-        $i = 0;
-        if ($request->arquivo) {
-            foreach ($request->arquivo as $image) {
-                $this->image->create([
-                    'url' => $image,
-                    'position' => $i,
-                    'catalog_product_id' => $product->id,
-                ]);
-                $i++;
-            }
-        }
         return redirect()->route('admin.catalog.products.index');
     }
 
@@ -179,11 +170,9 @@ class ProductController extends Controller
         $id = $request->product;
         $productslist = $this->product->pluck('name', 'id');
         $listdepartments = Department::pluck('name', 'id');
-        $product = $this->product->find($id);
+        $product = $this->product->with('images')->find($id);
         $brands  = Brand::pluck('description', 'id');
-        $files = $product->images; //$this->image->where("catalog_product_id", $id)->orderby('position')->get();
-        $files = [];
-
+        $files = $product->images()->orderby('order')->get();
         ## obtendo departamentos ##
         $departments = $product->departments;
         $departmentsData = $departments->map(function ($department) {
@@ -260,6 +249,8 @@ class ProductController extends Controller
         $id = $request->product;
         $product = $this->product->find($id);
         $product->update($request->all());
+
+        $this->updateImages($request->arquivo, $product);
 
         ## salvando promoções ##
         $promotions = json_decode($request->promotions);
@@ -370,31 +361,6 @@ class ProductController extends Controller
             }
         }
 
-        $manter = array();
-        $i = 0;
-        if ($request->arquivo) {
-            foreach ($request->arquivo as $image) {
-                //confirmar se existe imagem
-                if ($old_file = $this->image->where("url", $image)->where("catalog_product_id", $id)->first()) {
-                    $old_file->update([
-                        'position' => $i
-                    ]);
-                    $manter[] = $old_file->id;
-                } else {
-                    $new_file = $this->image->create([
-                        'url' => $image,
-                        'position' => $i,
-                        'catalog_product_id' => $id,
-                    ]);
-                    $manter[] = $new_file->id;
-                }
-                $i++;
-            }
-        }
-
-        $this->image->whereNotIn('id', $manter)->where('catalog_product_id', $id)->delete();
-
-
         return redirect()->route('admin.catalog.products.index');
     }
 
@@ -464,7 +430,7 @@ class ProductController extends Controller
         $product->name = $product->name . " copia";
         $product->slug = $product->slug . "-copia";
         $brands  = Brand::pluck('description', 'id');
-        $files = $this->image->where("catalog_product_id", $id)->orderby('position')->get();
+        $files = $product->images()->orderby('order')->get();
         ## obtendo departamentos ##
         $departments = $product->departments;
         $departmentsData = $departments->map(function ($department) {
@@ -562,5 +528,21 @@ class ProductController extends Controller
 
 
         //return Excel::download(new CustomersExport, 'clientes.xlsx');
+    }
+
+
+    public function updateImages($images, $product)
+    {
+
+        $product->images()->update(['order' => null]);
+        foreach ($images as $key => $image) {
+            $i = $product->images()->where('link', 'LIKE', $image)->first();
+            if ($i) {
+                $i->update(['order' => $key]);
+            } else {
+                $product->images()->create(['link' => $image, 'order' => $key]);
+            }
+        }
+        $product->images()->where('order', null)->delete();
     }
 }

@@ -4,6 +4,7 @@ namespace Marrs\MarrsCatalog\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Marrs\MarrsAdmin\Models\Image;
 
 class Product extends Model
 {
@@ -37,9 +38,14 @@ class Product extends Model
         'key_words'
     ];
 
+    // public function images()
+    // {
+    //     return $this->hasMany('Marrs\MarrsCatalog\Models\ProductImage', 'catalog_product_id')->orderby('position');
+    // }
+
     public function images()
     {
-        return $this->hasMany('Marrs\MarrsCatalog\Models\ProductImage', 'catalog_product_id')->orderby('position');
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function isFavorite()
