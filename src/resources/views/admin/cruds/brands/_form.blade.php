@@ -21,10 +21,15 @@
 
                 <div class="form-group">
                     @if (@$brand)
-                        <img src="/{{ $brand->image }}" alt="" width="450"><br>
+                        <img src="/{{ $brand->image->link }}" alt="" width="450" class="image-show">
+                        <button type="button" title="Remover imagem" class='btn btn-danger image-show'
+                            onclick="$('#remove_image').val('true');$('.image-show').hide();"><i
+                                class='fa fa-trash'></i></button>
+                        {!! Form::hidden('remove_image', null, ['class' => 'form-control', 'id' => 'remove_image']) !!}<br>
+                        <hr />
                     @endif
-                    {!! Form::label('image', 'Imagem') !!}
-                    {!! Form::file('image', null, ['class' => 'form-control']) !!}
+                    {!! Form::label('file', 'Imagem') !!}
+                    {!! Form::file('file', null, ['class' => 'form-control']) !!}
                 </div>
             </div>
         </div>

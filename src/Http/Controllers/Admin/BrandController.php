@@ -5,20 +5,14 @@ namespace Marrs\MarrsCatalog\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Marrs\MarrsCatalog\Models\Brand;
 use Illuminate\Http\Request;
+use Marrs\MarrsAdmin\Traits\UploadFile;
 
 class BrandController extends Controller
 {
+    use UploadFile;
 
     private $brand;
 
-    private $extensions = [
-        "jpg",
-        "JPG",
-        "jpeg",
-        "JPEG",
-        "png",
-        "PNG"
-    ];
 
     public function __construct(
         Brand $brand
@@ -58,11 +52,7 @@ class BrandController extends Controller
             'description' => $request->description,
         ]);
 
-        if ($request->image) {
-            $image = $this->uploadfile($request->image);
-            $brand->image = $image;
-            $brand->save();
-        }
+        $this->updateImage($request->file, $brand, $request->remove_image);
 
         return redirect()->route('admin.catalog.brands.index');
     }
@@ -105,11 +95,7 @@ class BrandController extends Controller
             'description' => $request->description,
         ]);
 
-        if ($request->image) {
-            $image = $this->uploadfile($request->image);
-            $brand->image = $image;
-            $brand->save();
-        }
+        $this->updateImage($request->file, $brand, $request->remove_image);
 
         return redirect()->route('admin.catalog.brands.index');
     }
@@ -127,20 +113,26 @@ class BrandController extends Controller
         return redirect()->route('admin.catalog.brands.index');
     }
 
-    public function uploadfile($file)
+    public function updateImage($file, $brand, $delete = 'false')
     {
-        $server = str_replace(':8000', '', $_SERVER['HTTP_HOST']);
-        $destinationPath = 'storage/' . $server . '/images/brands/';
-        if (in_array($file->extension(), $this->extensions)) {
-            $size  = $file->getSize();
-            $narq = explode(".", $file->getClientOriginalName());
-            $extension = $file->getClientOriginalExtension();
-            $fileName = date('Ymd_his') . rand(0, 100000) . '.' . $extension;
-            $archive = $destinationPath . $fileName;
-            $file->move($destinationPath, $archive);
-            return $archive;
-        } else {
-            return null;
+
+
+        if ($delete == 'true') {
+            $brand->image()->delete();
+        }
+
+
+        if (is_file($file)) {
+
+            $brand->image()->delete();
+
+            $image = $this->uploadFile(
+                $file,
+                'catalog/brands/',
+                'image'
+            );
+
+            $brand->image()->create(['link' => $image, 'order' => 0]);
         }
     }
 }

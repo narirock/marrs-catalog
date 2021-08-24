@@ -4,11 +4,14 @@ namespace Marrs\MarrsCatalog\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Marrs\MarrsAdmin\Models\Image;
 
 class Brand extends Model
 {
     use SoftDeletes;
+
     protected $table = "catalog_brands";
+
     protected $fillable = [
         'description',
         'logo',
@@ -19,10 +22,12 @@ class Brand extends Model
     public static  function boot()
     {
         parent::boot();
+    }
 
-        /*static::creating(function ($model) {
-            $model->author_id = auth()->user()->id;
-        });*/
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 
     public function products()
