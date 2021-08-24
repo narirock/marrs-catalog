@@ -20,15 +20,17 @@
 <div class="row">
     <div class="col col-md-6">
         <div class="form-group">
+
             @if (@$department->image != '')
-                <img src="/{{ $department->image }}" alt="" width="450" class="image-show"><br>
-                <button type="button" class='btn btn-danger image-show'
-                    onclick="$('#remove_image').val('true');$('.image-show').hide();"><i class='fa fa-trash'> Remover
-                        imagem</i></button>
+                <img src="/{{ $department->image->link }}" alt="" width="450" class="image-show">
+                <button type="button" title="Remover imagem" class='btn btn-danger image-show'
+                    onclick="$('#remove_image').val('true');$('.image-show').hide();"><i
+                        class='fa fa-trash'></i></button>
                 {!! Form::hidden('remove_image', null, ['class' => 'form-control', 'id' => 'remove_image']) !!}<br>
+                <hr>
             @endif
-            {!! Form::label('image', 'Imagem') !!}
-            {!! Form::file('image', null, ['class' => 'form-control']) !!}
+            {!! Form::label('file', 'Imagem') !!}
+            {!! Form::file('file', null, ['class' => 'form-control']) !!}
         </div>
     </div>
 

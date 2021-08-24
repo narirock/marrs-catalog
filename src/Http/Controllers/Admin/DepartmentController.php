@@ -5,22 +5,15 @@ namespace Marrs\MarrsCatalog\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Marrs\MarrsAdmin\Traits\UploadFile;
 use Marrs\MarrsCatalog\Http\Requests\DepartmentRequest;
 use Marrs\MarrsCatalog\Models\Department;
 
 class DepartmentController extends Controller
 {
+    use UploadFile;
 
     private $department;
-
-    private $extensions = [
-        "jpg",
-        "JPG",
-        "jpeg",
-        "JPEG",
-        "png",
-        "PNG"
-    ];
 
     public function __construct(
         Department $department
@@ -54,7 +47,6 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
-
         $department = $this->department->create([
             "name"          => $request->name,
             "description"   => $request->description,
@@ -64,12 +56,7 @@ class DepartmentController extends Controller
             "enable"        => $request->enable == '1' ? true : false
         ]);
 
-        if ($request->image) {
-            $image = $this->uploadfile($request->image);
-            $department->update([
-                'image' => $image
-            ]);
-        }
+        $this->updateImage($request->file, $department, $request->remove_image);
 
         return redirect()->route('admin.catalog.departments.index');
     }
@@ -90,8 +77,7 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-
-        $department = $this->department->find($id);
+        $department = $this->department->with('image')->find($id);
         $departments = $this->listnotself($id);
         return view('marrs-catalog::admin.cruds.departments.edit', compact('department', 'departments'));
     }
@@ -114,12 +100,8 @@ class DepartmentController extends Controller
             "enable"        => $request->enable == '1' ? true : false
         ]);
 
-        if ($request->image) {
-            $image = $this->uploadfile($request->image);
-            $department->update([
-                'image' => $image
-            ]);
-        }
+
+        $this->updateImage($request->file, $department, $request->remove_image);
 
         return redirect()->route('admin.catalog.departments.index');
     }
@@ -140,19 +122,26 @@ class DepartmentController extends Controller
         return $departments;
     }
 
-    public function uploadfile($file)
+    public function updateImage($file, $department, $delete = 'false')
     {
-        $destinationPath = 'storage/uploads/catalog/departments/';
-        if (in_array($file->extension(), $this->extensions)) {
-            $size  = $file->getSize();
-            $narq = explode(".", $file->getClientOriginalName());
-            $extension = $file->getClientOriginalExtension();
-            $fileName = date('Ymd_his') . rand(0, 100000) . '.' . $extension;
-            $archive = $destinationPath . $fileName;
-            $file->move($destinationPath, $archive);
-            return $archive;
-        } else {
-            return null;
+
+
+        if ($delete == 'true') {
+            $department->image()->delete();
+        }
+
+
+        if (is_file($file)) {
+
+            $department->image()->delete();
+
+            $image = $this->uploadFile(
+                $file,
+                'catalog/department/',
+                'image'
+            );
+
+            $department->image()->create(['link' => $image, 'order' => 0]);
         }
     }
 }

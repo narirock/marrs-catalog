@@ -4,6 +4,7 @@ namespace Marrs\MarrsCatalog\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Marrs\MarrsAdmin\Models\Image;
 
 class Department extends Model
 {
@@ -15,7 +16,6 @@ class Department extends Model
         "name",
         "description",
         "slug",
-        "image",
         "enable",
         "department_id",
         "excluder_id",
@@ -38,6 +38,11 @@ class Department extends Model
             $model->excluder_id = auth()->check() ? auth()->user()->id : null;
             $model->save();
         });
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 
     public function department()

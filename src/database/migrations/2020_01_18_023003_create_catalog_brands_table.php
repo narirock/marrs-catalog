@@ -16,7 +16,6 @@ class CreateCatalogBrandsTable extends Migration
         Schema::create('catalog_brands', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('description')->nullable();
-            $table->string('image')->nullable();
             $table->text('author_id')->nullable();
             $table->text('excluder_id')->nullable();
             $table->Softdeletes();

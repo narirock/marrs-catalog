@@ -18,7 +18,6 @@ class CreateCatalogDepartmentsTable extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->string('slug')->nullable();
-            $table->string('image')->nullable();
             $table->boolean('enable')->nullable();
             $table->integer('department_id')->nullable();
             $table->integer('layout_id')->nullable();
