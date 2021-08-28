@@ -463,7 +463,11 @@ class ProductController extends Controller
         });
         $product->relatedsData = json_encode($relatedsData);
         ## obtendo promoçoes ##
-        $promotions = $product->promotions;
+        $promotions = $product->promotions->map(function ($promotion) {
+            $promotion->id  = null;
+            $promotion->product_id =  null;
+            return $promotion;
+        });
         ## obtendo opcoes ##
         $opt = $product->options;
         $options = $opt->map(function ($option) {
