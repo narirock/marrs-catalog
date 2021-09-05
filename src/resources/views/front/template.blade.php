@@ -1,31 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
-    @yield('seo')
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fbb900">
+    @yield('meta')
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ env('APP_URL') }}/site/img/favicon.png">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- MASTER STYLE CSS file -->
+    <link rel="stylesheet" href="/site/css/main.css">
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    {{-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
 
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    @stack("styles")
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" href="/vendor/marrs-catalog/css/front.css">
-
-
-    @stack('css')
 </head>
 
 <body>
+    <x-marrs-catalog-main-nav />
+    {{-- <x-marrs-catalog-cart-slidecart /> --}}
+    <div class="overlay-menu"></div>
     @yield('content')
+    <x-marrs-catalog-main-footer />
+
     @stack('modals')
+    <!-- Scripts Files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/site/vendor/bootstrap5/js/popper.min.js"></script>
+    <script src="/site/vendor/bootstrap5/js/bootstrap.min.js"></script>
+
+    <script src="/site/js/webslidemenu.js"></script>
+    <script src="/site/js/swiper-bundle.min.js"></script>
+    <script src="/site/vendor/owl/owl.carousel.min.js"></script>
+
     @stack('scripts')
+    <script src="/site/js/main.js"></script>
+
+
 </body>
 
 </html>

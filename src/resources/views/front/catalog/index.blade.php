@@ -49,7 +49,7 @@
                         @if (count($products) > 0)
                             <div class="row">
                                 @foreach ($products as $product)
-                                    <x-marrs-catalog-products-product-block :product="$product" :lg='6' />
+
                                 @endforeach
                             </div>
 
@@ -60,7 +60,7 @@
 
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
-                        <x-marrs-catalog-categories-widget />
+
                     </div>
 
                 </div>

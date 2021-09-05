@@ -5,10 +5,11 @@ namespace Marrs\MarrsCatalog\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Marrs\MarrsAdmin\Models\Image;
+use Marrs\MarrsCatalog\Traits\Options;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Options;
 
     protected $table = "catalog_products";
 

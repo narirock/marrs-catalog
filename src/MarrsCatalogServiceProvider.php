@@ -5,9 +5,8 @@ namespace Marrs\MarrsCatalog;
 use Illuminate\Support\ServiceProvider;
 use Marrs\MarrsCatalog\Console\Commands\Install;
 use Marrs\MarrsCatalog\Console\Commands\Remove;
-use Marrs\MarrsCatalog\Views\Components\Products\LastRow;
-use Marrs\MarrsCatalog\Views\Components\Department\Widget;
-use Marrs\MarrsCatalog\Views\Components\Products\ProductBlock;
+use Marrs\MarrsCatalog\Views\Components\Main\Footer;
+use Marrs\MarrsCatalog\Views\Components\Main\Nav;
 
 class MarrsCatalogServiceProvider extends ServiceProvider
 {
@@ -29,14 +28,11 @@ class MarrsCatalogServiceProvider extends ServiceProvider
             __DIR__ . '/config/config.php' => config_path('marrs-catalog.php')
         ], 'marrs-catalog-config');
 
-        $this->loadViewComponentsAs('marrs-catalog-products', [
-            LastRow::class,
-            ProductBlock::class,
+        $this->loadViewComponentsAs('marrs-catalog-main', [
+            Footer::class,
+            Nav::class,
         ]);
 
-        $this->loadViewComponentsAs('marrs-catalog-categories', [
-            Widget::class
-        ]);
 
         $this->publishes([
             __DIR__ . '/public' => public_path('vendor/marrs-catalog'),
