@@ -101,6 +101,6 @@ class Product extends Model
 
     public function promo()
     {
-        return $this->hasOne('Marrs\MarrsCatalog\Models\ProductPromotion')->where('start', '<=', date('Y-m-d'))->where('end', '>=', date('Y-m-d'))->limit(1);
+        return $this->hasOne('Marrs\MarrsCatalog\Models\ProductPromotion', 'catalog_product_id')->where('start', '<=', date('Y-m-d'))->where('end', '>=', date('Y-m-d'))->limit(1);
     }
 }
