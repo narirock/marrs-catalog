@@ -53,7 +53,9 @@ class DepartmentController extends Controller
             "slug"          => $request->slug,
             "image"         => $request->image,
             "department_id"   => $request->department_id,
-            "enable"        => $request->enable == '1' ? true : false
+            "enable"        => $request->enable == '1' ? true : false,
+            "listalls" => $request->listalls,
+            "hasmenu" => $request->hasmenu
         ]);
 
         $this->updateImage($request->file, $department, $request->remove_image);
@@ -97,7 +99,9 @@ class DepartmentController extends Controller
             "slug"          => $request->slug,
             "image"         => $request->image,
             "department_id"   => $request->department_id,
-            "enable"        => $request->enable == '1' ? true : false
+            "enable"        => $request->enable == '1' ? true : false,
+            "listalls" => $request->listalls,
+            "hasmenu" => $request->hasmenu
         ]);
 
 

@@ -23,6 +23,9 @@ class CreateCatalogDepartmentsTable extends Migration
             $table->integer('layout_id')->nullable();
             $table->text('author_id')->nullable();
             $table->text('excluder_id')->nullable();
+            $table->boolean('listalls')->nullable()->default(false);
+            $table->boolean('hasmenu')->nullable()->default(false);
+            $table->boolean('card')->nullable()->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
