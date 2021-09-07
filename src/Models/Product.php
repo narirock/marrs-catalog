@@ -96,7 +96,7 @@ class Product extends Model
 
     public function access()
     {
-        return $this->hasMany('Marrs\MarrsCatalog\Models\ProductRead');
+        return $this->hasMany('Marrs\MarrsCatalog\Models\ProductRead', 'catalog_product_id');
     }
 
     public function promo()
