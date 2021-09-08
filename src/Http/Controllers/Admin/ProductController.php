@@ -539,12 +539,14 @@ class ProductController extends Controller
     {
 
         $product->images()->update(['order' => null]);
-        foreach ($images as $key => $image) {
-            $i = $product->images()->where('link', 'LIKE', $image)->first();
-            if ($i) {
-                $i->update(['order' => $key]);
-            } else {
-                $product->images()->create(['link' => $image, 'order' => $key]);
+        if (count($images) > 0) {
+            foreach ($images as $key => $image) {
+                $i = $product->images()->where('link', 'LIKE', $image)->first();
+                if ($i) {
+                    $i->update(['order' => $key]);
+                } else {
+                    $product->images()->create(['link' => $image, 'order' => $key]);
+                }
             }
         }
         $product->images()->where('order', null)->delete();

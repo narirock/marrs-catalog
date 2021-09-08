@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Marrs\MarrsCatalog\Models\Product;
 use Illuminate\Support\Facades\Artisan;
 use Marrs\MarrsAdmin\Models\Menu;
+use Marrs\MarrsCatalog\Models\Brand;
 use Marrs\MarrsCatalog\Models\Department;
 
 class Install extends Command
@@ -75,10 +76,18 @@ class Install extends Command
             ]);
         }
 
+        for ($i = 1; $i <= 3; $i++) {
+            Brand::create([
+                'name' => "Marca {$i}",
+                'slug' => "marca{$i}"
+            ]);
+        }
+
         for ($i = 1; $i <= 20; $i++) {
             Product::create([
                 'name' => "Product {$i}",
                 'price' => rand(100, 1000),
+                'status' => 1,
                 //'image' => '/i.picsum.photos/id/1011/5472/3648.jpg?hmac=Koo9845x2akkVzVFX3xxAc9BCkeGYA9VRVfLE4f0Zzk',
                 'slug' => "product{$i}",
                 'catalog_department_id' => rand(1, 3),
