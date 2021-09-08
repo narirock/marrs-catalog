@@ -91,7 +91,7 @@ class Product extends Model
 
     public function productsRelateds()
     {
-        return $this->belongsToMany('Marrs\MarrsCatalog\Models\Product', 'Marrs\MarrsCatalog\Models\ProductRelated', 'product_id', 'related_id');
+        return $this->belongsToMany('Marrs\MarrsCatalog\Models\Product', 'Marrs\MarrsCatalog\Models\ProductRelated', 'catalog_product_id', 'related_id');
     }
 
     public function access()
