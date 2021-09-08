@@ -69,16 +69,19 @@ class Install extends Command
             ]
         ]);
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             Department::create([
                 'name' => "Departamento {$i}",
-                'slug' => "departamento{$i}"
+                'slug' => "departamento{$i}",
+                'hasmenu' => rand(0,1),
+                'listalls' => rand(0,1),
+                'card' => rand(0,1)
             ]);
         }
 
         for ($i = 1; $i <= 3; $i++) {
             Brand::create([
-                'name' => "Marca {$i}",
+                'description' => "Marca {$i}",
                 'slug' => "marca{$i}"
             ]);
         }
