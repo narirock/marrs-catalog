@@ -20,7 +20,7 @@
             <div class="content-inner">
 
                 <div class="form-group">
-                    @if (@$brand)
+                    @if (@$brand && @$brand->image)
                         <img src="/{{ $brand->image->link }}" alt="" width="450" class="image-show">
                         <button type="button" title="Remover imagem" class='btn btn-danger image-show'
                             onclick="$('#remove_image').val('true');$('.image-show').hide();"><i
