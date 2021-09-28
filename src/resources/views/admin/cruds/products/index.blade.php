@@ -38,11 +38,10 @@
                                 <td>{{ $product->product['name'] }}</td>
                             @else
                                 <td class="text-center" width='300'>
-
-                                    {{-- @foreach (@$product->departments as $departamento)
+                                    @foreach (@$product->departments as $departamento)
                                         <span class="badge badge-secondary"
                                             style='margin:5px'>{{ @$departamento->department->name }}</span>
-                                    @endforeach --}}
+                                    @endforeach
                                 </td>
                             @endif
                             <td class="text-center">
