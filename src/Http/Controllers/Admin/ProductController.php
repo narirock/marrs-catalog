@@ -281,7 +281,7 @@ class ProductController extends Controller
                 }
             }
         }
-        $test = $product->promotions()->whereNotIn('id', $mantainPromotion)->delete();
+        $test = $product->promotions()->where('catalog_product_id', $product->id)->whereNotIn('id', $mantainPromotion)->delete();
 
         ## salvand opções ##
         $options = json_decode($request->options);
@@ -326,10 +326,10 @@ class ProductController extends Controller
                         $mantainValues[] = $vl->id;
                     }
                 }
-                $opt->values()->whereNotIn('id', $mantainValues)->delete();
+                $opt->values()->where('catalog_product_option_id', $opt->id)->whereNotIn('id', $mantainValues)->delete();
             }
         }
-        $product->options()->whereNotIn('id', $mantainOptions)->delete();
+        $product->options()->where('catalog_product_id', $product->id)->whereNotIn('id', $mantainOptions)->delete();
 
         ## salvando relacionados ##
         $relateds = json_decode($request->relatedsData);
