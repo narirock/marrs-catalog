@@ -55,7 +55,8 @@ class DepartmentController extends Controller
             "department_id"   => $request->department_id,
             "enable"        => $request->enable == '1' ? true : false,
             "listalls" => $request->listalls,
-            "hasmenu" => $request->hasmenu
+            "hasmenu" => $request->hasmenu,
+            "card"        => $request->card == '1' ? true : false,
         ]);
 
         $this->updateImage($request->file, $department, $request->remove_image);
@@ -101,7 +102,8 @@ class DepartmentController extends Controller
             "department_id"   => $request->department_id,
             "enable"        => $request->enable == '1' ? true : false,
             "listalls" => $request->listalls,
-            "hasmenu" => $request->hasmenu
+            "hasmenu" => $request->hasmenu,
+            "card"        => $request->card == '1' ? true : false,
         ]);
 
 
