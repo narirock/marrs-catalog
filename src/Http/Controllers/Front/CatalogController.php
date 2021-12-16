@@ -47,7 +47,10 @@ class CatalogController extends Controller
     {
         //$ip = Request::ip();
         $product = Product::where('slug', $request->slug)->first();
-
+        
+        if($product->status != 1){
+            return redirect(404);
+        }
         /*ProductRead::create([
             'ip' => $ip,
             'product_id' => $product->id

@@ -539,7 +539,7 @@ class ProductController extends Controller
     {
 
         $product->images()->update(['order' => null]);
-        if (@count($images) > 0) {
+        if ($images && @count($images) > 0) {
             foreach ($images as $key => $image) {
                 $i = $product->images()->where('link', 'LIKE', $image)->first();
                 if ($i) {
