@@ -14,6 +14,7 @@ use Marrs\MarrsCatalog\Models\ProductOptionValue;
 use Marrs\MarrsCatalog\Models\ProductPromotion;
 use Marrs\MarrsCatalog\Models\Department;
 use App\Repositories\Contracts\PaymentInterface;
+use Illuminate\Pagination\Paginator;
 use Marrs\MarrsAdmin\Traits\UploadFile;
 use Marrs\MarrsCatalog\Http\Requests\ProductRequest;
 
@@ -39,7 +40,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->product->with('images')->get();
+
+        if (@$_GET['page']) {
+            session()->put('page', $_GET['page']);
+            $page = $_GET['page'];
+        } else {
+            $page = session()->get('page') ?? 1;
+        }
+
+        Paginator::currentPageResolver(function () use ($page) {
+            return $page;
+        });
+
+        $products = $this->product->with('images')->paginate(20);
         return view('marrs-catalog::admin.cruds.products.index', compact('products'));
     }
 
