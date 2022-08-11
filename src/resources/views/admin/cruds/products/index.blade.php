@@ -25,14 +25,14 @@
             </div>
         </div>
 
-        <table class="table form-table table-main table-responsive-sm">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Imagem</th>
                     <th>Produto</th>
                     <th>Modelo</th>
                     <th>Departamentos</th>
-                    <th width="150" class="text-center">
+                    <th width="250" class="text-center">
                         <a href="{{ route('admin.catalog.products.create') }}" class="btn btn-success  btn-sm">Novo</a>
                     </th>
                 </tr>
