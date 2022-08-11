@@ -57,7 +57,7 @@ class ProductController extends Controller
             $products = $products->where('name', 'LIKE', '%' . $_GET['term'] . '%');
         }
         return view('marrs-catalog::admin.cruds.products.index', [
-            'products' => $products->paginate(1)
+            'products' => $products->paginate(20)
         ]);
     }
 
