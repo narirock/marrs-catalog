@@ -52,8 +52,13 @@ class ProductController extends Controller
             return $page;
         });
 
-        $products = $this->product->with('images')->paginate(20);
-        return view('marrs-catalog::admin.cruds.products.index', compact('products'));
+        $products = $this->product->with('images');
+        if (@$_GET['term']) {
+            $products = $products->where('name', 'LIKE', '%' . $_GET['term'] . '%');
+        }
+        return view('marrs-catalog::admin.cruds.products.index', [
+            'products' => $products->paginate(1)
+        ]);
     }
 
     /**

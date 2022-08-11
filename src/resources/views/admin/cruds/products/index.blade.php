@@ -96,7 +96,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            {{$products->links()}}
+            {{$products->withQueryString()->links()}}
         </div>
     </div>
 </div>
